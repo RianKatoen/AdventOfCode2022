@@ -34,7 +34,7 @@ def translate_player_2(move1, move2):
         case "Y": return Move.PAPER
         case "Z": return Move.SCISSORS
 
-print("example  1: ", sum(game_scores("example", translate_player_2)))
+print("example 1: ", sum(game_scores("example", translate_player_2)))
 print("part 1: ", sum(game_scores("input", translate_player_2)))
 
 # Part 2
@@ -47,5 +47,5 @@ def strategy_player_2(move1, move2):
         case Move.PAPER: return Move.ROCK if move2 == "X" else Move.SCISSORS
         case Move.SCISSORS: return Move.PAPER if move2 == "X" else Move.ROCK
 
-print("example  2: ", sum(game_scores("example", strategy_player_2)))
+print("example 2: ", sum(game_scores("example", strategy_player_2)))
 print("part 2: ", sum(game_scores("input", strategy_player_2)))
