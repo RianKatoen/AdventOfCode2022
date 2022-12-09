@@ -14,24 +14,17 @@ def move_head(head, move):
 
 def move_tail(tail, head):
     delta_x, delta_y = head[0] - tail[0], head[1] - tail[1]
-    if abs(delta_x) > 1 and abs(delta_y) > 1:
-        return [tail[0] + sign(delta_x), tail[1] + sign(delta_y)]
-    elif abs(delta_x) > 1 and abs(delta_y) == 1:
-        return [tail[0] + sign(delta_x), tail[1] + sign(delta_y)]
-    elif abs(delta_x) == 1 and abs(delta_y) > 1:
+    if abs(delta_x) <= 1 and abs(delta_y) <= 1:
+        return [tail[0], tail[1]]
+    elif abs(delta_x) >= 1 and abs(delta_y) >= 1:
         return [tail[0] + sign(delta_x), tail[1] + sign(delta_y)]
     elif abs(delta_x) > 1 and abs(delta_y) == 0:
         return [tail[0] + sign(delta_x), tail[1]]
     elif abs(delta_x) == 0 and abs(delta_y) > 1:
         return [tail[0], tail[1] + sign(delta_y)]
-    else:
-        return [tail[0], tail[1]]
 
 def play_moves(file: str, n: int = 2):
-    knots, positions = [], set()
-    for i in range(n):
-        knots.append([0, 0])
-
+    positions, knots = set(), [[0, 0] for _ in range(n)]
     for move in input(file):
         for _ in range(move[1]):
             knots[0] = move_head(knots[0], move[0])
