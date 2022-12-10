@@ -6,7 +6,7 @@ def chain(start, *funcs):
     return res
 
 def input(file):
-    return [line.strip() for line in open("day4/" + file + ".txt", "r")]
+    return [line.strip() for line in open("day04/" + file + ".txt", "r")]
 
 def split_pairs(line):
     return line.split(',')

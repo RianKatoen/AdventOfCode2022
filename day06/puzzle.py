@@ -1,6 +1,6 @@
 # Common.
 def input(file):
-    return [line.strip() for line in open("day6/" + file + ".txt", "r")]
+    return [line.strip() for line in open("day06/" + file + ".txt", "r")]
 
 def marker(message, n = 4):
     i = n

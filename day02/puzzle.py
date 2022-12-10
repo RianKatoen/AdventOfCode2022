@@ -2,7 +2,7 @@
 from enum import IntEnum
 
 def input(file):
-    return [line.split() for line in open("day2/" + file + ".txt", "r")]
+    return [line.split() for line in open("day02/" + file + ".txt", "r")]
     
 class Move(IntEnum):
     ROCK = 1

@@ -1,6 +1,6 @@
 # Common.
 def input(file: str):
-    return [[val[0], int(val[1])] for val in [line.strip().split(" ") for line in open("day9/" + file + ".txt", "r")]]
+    return [[val[0], int(val[1])] for val in [line.strip().split(" ") for line in open("day09/" + file + ".txt", "r")]]
 
 def sign(val):
     return 1 if val >= 0 else -1

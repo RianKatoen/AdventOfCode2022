@@ -1,6 +1,6 @@
 # Common.
 def input(file, letter_transform = lambda c : c):
-    return [[letter_transform(letter) for letter in line.strip()] for line in open("day3/" + file + ".txt", "r")]
+    return [[letter_transform(letter) for letter in line.strip()] for line in open("day03/" + file + ".txt", "r")]
 
 def priority(char):
     if ord(char) < 97:

@@ -1,6 +1,6 @@
 # Common.
 def input(file: str):
-    return [[int(char) for char in line.strip()] for line in open("day8/" + file + ".txt", "r")]
+    return [[int(char) for char in line.strip()] for line in open("day08/" + file + ".txt", "r")]
 
 def add_tree(trees: list[(int, int)], tree):
     if not(tree in trees):

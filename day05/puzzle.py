@@ -1,6 +1,6 @@
 # Common.
 def input(file):
-    return [line for line in open("day5/" + file + ".txt", "r")]
+    return [line for line in open("day05/" + file + ".txt", "r")]
 
 def stacks(lines):
     stacks = []

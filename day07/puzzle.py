@@ -3,7 +3,7 @@ def prune(file: str):
     position = []
     files = {}
 
-    for line in [line.strip() for line in open("day7/" + file + ".txt", "r")]:
+    for line in [line.strip() for line in open("day07/" + file + ".txt", "r")]:
         if line[0:2] == "$ ": # is a command
             if line[0:4] == "$ cd":
                 if line[5:] == "/":
