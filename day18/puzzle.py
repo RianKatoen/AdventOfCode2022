@@ -25,58 +25,48 @@ def no_touching_sides(cubes: list[tuple[int, int, int]]):
     return 6 * len(cubes) - 2 * n, 2 * n
 
 # Part 1
-#print("example 1:", no_touching_sides(input("example")))
-#print("part 1:", no_touching_sides(input("input")))
+print("example 1:", no_touching_sides(input("example"))[0])
+print("part 1:", no_touching_sides(input("input"))[0])
 
 def min_max(cubes: list[int, int, int], dim: int):
     return min([cube[dim] for cube in cubes]), max([cube[dim] for cube in cubes])
 
-    # for cube in cubes:
-    #     x_y, z = (cube[0], cube[1]), cube[2]
-    #     if x_y in lines.keys():
-    #         lines[x_y].append(z)
-    #     else:
-    #         lines[x_y] = [z]
+def add_point(point: tuple[int, int, int], add: tuple[int, int, int]):
+    return tuple((point[0] + add[0], point[1] + add[1], point[2] + add[2]))
 
-def translate_point(point: tuple[int, int, int], dim: tuple[int, int, int]):
-    new_point = [0, 0, 0]
-    for i, d in enumerate(dim):
-        new_point[d] = point[i]
-    return tuple(new_point)
-
-def get_external(cubes: list[tuple[int, int, int]]):
-    internal_cubes = list()
-    external_cubes = set()
-    for dim in permutations((0, 1, 2)):
-        total_min_c3, total_max_c3 = min_max(cubes, dim[2])
-        lines: dict[tuple[int, int], list[int]] = {}
-        for cube in cubes:
-            c1_c2, c3 = (cube[dim[0]], cube[dim[1]]), cube[dim[2]]
-            if c1_c2 in lines.keys():
-                lines[c1_c2].append(c3)
-            else:
-                lines[c1_c2] = [c3]
-        
-        lines = {c1_c2: (min(c3), max(c3)) for c1_c2, c3 in lines.items()}
-        new_cubes = []
-        for c1_c2, min_max_c3 in lines.items():
-            c1, c2, min_c3, max_c3 = *c1_c2, *min_max_c3
-            for c3 in range(total_min_c3, total_max_c3 + 1):
-                if c3 < min_c3 or c3 > max_c3:
-                    new_cubes.append(translate_point((c1, c2, c3), dim))
-        
-        external_cubes = external_cubes.union(new_cubes)
-
+def simulate_water(cubes: list[tuple[int, int, int]]):
     min_x, max_x, min_y, max_y, min_z, max_z = *min_max(cubes, 0), *min_max(cubes, 1), *min_max(cubes, 2)
-    for x in range(min_x, max_x):
-        for y in range(min_y, max_y):
-            for z in range(min_z, max_z):
-                if not((x, y, z) in external_cubes):
-                    internal_cubes.append((x, y, z))
-                    
-    print(cubes)
-    print(list(set(internal_cubes)))
-    return list(set(internal_cubes))
+    all_water, new_water = set(), set()
+    all_water.add((min_x - 1, min_y - 1, min_z - 1))
+    new_water.add((min_x - 1, min_y - 1, min_z - 1))
+    
+    while len(new_water) > 0:
+        all_water.update(new_water)
+        new_new_water = new_water
+        new_water = set()
+        for water in new_new_water.copy():
+            if min_x <= water[0] and not(add_point(water, (-1, 0, 0)) in all_water) and not(add_point(water, (-1, 0, 0)) in cubes):
+                new_water.add(add_point(water, (-1, 0, 0)))
+            if max_x >= water[0] and not(add_point(water, (1, 0, 0)) in all_water) and not(add_point(water, (1, 0, 0)) in cubes):
+                new_water.add(add_point(water, (1, 0, 0)))
+            if min_y <= water[1] and not(add_point(water, (0, -1, 0)) in all_water) and not(add_point(water, (0, -1, 0)) in cubes):
+                new_water.add(add_point(water, (0, -1, 0)))
+            if max_y >= water[1] and not(add_point(water, (0, 1, 0)) in all_water) and not(add_point(water, (0, 1, 0)) in cubes):
+                new_water.add(add_point(water, (0, 1, 0)))
+            if min_z <= water[2] and not(add_point(water, (0, 0, -1)) in all_water) and not(add_point(water, (0, 0, -1)) in cubes):
+                new_water.add(add_point(water, (0, 0, -1)))
+            if max_z >= water[2] and not(add_point(water, (0, 0, 1)) in all_water) and not(add_point(water, (0, 0, 1)) in cubes):
+                new_water.add(add_point(water, (0, 0, 1)))
+    
+    return all_water
 
-print(no_touching_sides(get_external(input("example"))))
-#print(get_external(input("input")))
+def no_touching_sides(cubes: list[tuple[int, int, int]], other_cubes : list[tuple[int, int, int]]):
+    n = 0
+    for cube_1 in cubes:
+        for cube_2 in other_cubes:
+            if sides_touching(cube_1, cube_2):
+                n += 1
+    return 6 * len(cubes) - n, n
+
+print("example 2:", no_touching_sides(simulate_water(input("example")), input("example"))[1])
+print("part 2:", no_touching_sides(simulate_water(input("input")), input("input"))[1])
